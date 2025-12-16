@@ -19,7 +19,7 @@ public class GamepadInputManager : MonoBehaviour, IInputDevice
     private bool[] isPressedServe;
     private bool[] isPressedStart;
 
-    // ƒVƒ‡ƒbƒg—p‚Ìƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½‚ ‚ÆAƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½”»’è‚ªw’èƒtƒŒ[ƒ€”‘±‚·‚é
+    // ï¿½Vï¿½ï¿½ï¿½bï¿½gï¿½pï¿½Ìƒ{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÆAï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è‚ªï¿½wï¿½ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private readonly int extensionFrame = 30;
 
     // Start is called before the first frame update
@@ -79,6 +79,11 @@ public class GamepadInputManager : MonoBehaviour, IInputDevice
     {
         return isPressedNorth[(int)player];
     }
+    public bool GetCVShotInput(Players player)
+    {
+        return false;
+    }
+
 
     public bool GetDropShotInput(Players player)
     {

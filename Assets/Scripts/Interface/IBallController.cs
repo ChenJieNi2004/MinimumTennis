@@ -1,6 +1,6 @@
 public interface IBallController
 {
-    // ƒvƒƒpƒeƒB‚ÌéŒ¾
+    // ï¿½vï¿½ï¿½ï¿½pï¿½eï¿½Bï¿½ÌéŒ¾
     public float Gravity { get; set; }
     public float SpeedX { get; set; }
     public float SpeedY { get; set; }

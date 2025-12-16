@@ -14,22 +14,43 @@ public class KeyboardInputManager : MonoBehaviour, IInputDevice
     private bool isPressedI;
     private bool isPressedJ;
 
+    private bool isPressedT;
+
     private bool isPressedSpace;
     private bool isPressedEscape;
 
     private readonly int extensionFrame = 30;
 
+    private bool usingML;
+    public static KeyboardInputManager Instance { get; private set; }
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
     void FixedUpdate()
     {
-        isPressedA = Input.GetKey(KeyCode.A);
-        isPressedD = Input.GetKey(KeyCode.D);
-        isPressedW = Input.GetKey(KeyCode.W);
-        isPressedS = Input.GetKey(KeyCode.S);
+        if (!usingML)
+        {
+            isPressedA = Input.GetKey(KeyCode.A);
+            isPressedD = Input.GetKey(KeyCode.D);
+            isPressedW = Input.GetKey(KeyCode.W);
+            isPressedS = Input.GetKey(KeyCode.S);
+        }
 
         if (Input.GetKeyDown(KeyCode.L)) { ExtendInputEastFrame(); }
         else if (Input.GetKeyDown(KeyCode.K)) { ExtendInputSouthFrame(); }
         else if (Input.GetKeyDown(KeyCode.I)) { ExtendInputNorthFrame(); }
         else if (Input.GetKeyDown(KeyCode.J)) { ExtendInputWestFrame(); }
+        else if (Input.GetKeyDown(KeyCode.T)) { ExtendInputCVShotFrame(); }
+
 
         isPressedSpace = Input.GetKeyDown(KeyCode.Space);
         isPressedEscape = Input.GetKeyDown(KeyCode.Escape);
@@ -75,6 +96,11 @@ public class KeyboardInputManager : MonoBehaviour, IInputDevice
         return isPressedSpace;
     }
 
+    public bool GetCVShotInput(Players player)
+    {
+      return isPressedT;
+    }
+
     public bool GetEscapeInput(Players player)
     {
         return isPressedEscape;
@@ -103,6 +129,45 @@ public class KeyboardInputManager : MonoBehaviour, IInputDevice
         isPressedJ = true;
         StartCoroutine(ExtendFrame(extensionFrame, () => { isPressedJ = false; }));
     }
+    private void ExtendInputCVShotFrame()
+    {
+        isPressedT = true;
+        StartCoroutine(ExtendFrame(extensionFrame, () => { isPressedT = false; }));
+    }
+
+    // ML Methods
+    public void ML_MoveLeft()
+    {
+        usingML = true;
+        isPressedA = true;
+        isPressedD = false;
+    }
+
+    public void ML_MoveRight()
+    {
+        usingML = true;
+        isPressedD = true;
+        isPressedA = false;
+    }
+
+    public void ML_StopMove()
+    {
+        usingML = true;
+        isPressedA = false;
+        isPressedD = false;
+    }
+
+
+    public void ML_NormalShot()
+    {
+        ExtendInputEastFrame(); // same as pressing L
+    }
+
+    public void ML_CVShot()
+    {
+        ExtendInputCVShotFrame(); // same as pressing T
+    }
+
 
     private IEnumerator ExtendFrame(int frame, Action action)
     {

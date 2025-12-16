@@ -10,4 +10,5 @@ public interface IInputDevice
     public bool GetServeInput(Players player);
     public bool GetDropShotInput(Players player);
     public bool GetEscapeInput(Players player);
+    public bool GetCVShotInput(Players player);
 }

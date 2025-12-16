@@ -41,13 +41,13 @@ public class Move : MonoBehaviour, ICalculateSpeed, ICharacterMover
 
     void FixedUpdate()
     {
-        // ˆÚ“®‘¬“x‚ÆˆÚ“®•ûŒü‚É‰‚¶‚ÄAƒAƒjƒ[ƒVƒ‡ƒ“‚Ìƒpƒ‰ƒ[ƒ^‚ğ•ÏX
+        // ï¿½Ú“ï¿½ï¿½ï¿½ï¿½xï¿½ÆˆÚ“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É‰ï¿½ï¿½ï¿½ï¿½ÄAï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ìƒpï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½^ï¿½ï¿½ÏX
         animator.SetFloat("SpeedX", speedX / maximumSpeed);
         animator.SetFloat("SpeedY", speedZ / maximumSpeed);
         animator.SetFloat("AnimationSpeed", maximumSpeed / baseMaximumSpeed);
     }
 
-    // ƒLƒƒƒ‰ƒNƒ^‚Ì‘«‚ÌIKÅ“K‰»—p‚É—p‚¢‚éŠÖ”
+    // ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½^ï¿½Ì‘ï¿½ï¿½ï¿½IKï¿½Å“Kï¿½ï¿½ï¿½pï¿½É—pï¿½ï¿½ï¿½ï¿½Öï¿½
     public float CalculateSpeed()
     {
         float speedRateX = Mathf.Abs(speedX / maximumSpeed);
@@ -72,40 +72,40 @@ public class Move : MonoBehaviour, ICalculateSpeed, ICharacterMover
 
     public void MovePlayer(float x, float z)
     {
-        // ¶•ûŒü‚Ö‚ÌˆÚ“®
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö‚ÌˆÚ“ï¿½
         if (x < -0.10f)
         {
             if (speedX - acceleration > maximumSpeed * x) { speedX -= acceleration; }
             else { speedX = maximumSpeed * x; }
         }
-        // ‰E•ûŒü‚Ö‚ÌˆÚ“®
+        // ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½Ö‚ÌˆÚ“ï¿½
         else if (x > 0.10f)
         {
             if (speedX + acceleration < maximumSpeed * x) { speedX += acceleration; }
             else { speedX = maximumSpeed * x; }
         }
-        // ‰½‚à“ü—Í‚³‚ê‚Ä‚¢‚È‚¢ê‡‚ÍŒ¸‘¬
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í‚ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½ê‡ï¿½ÍŒï¿½ï¿½ï¿½
         else { speedX *= 0.90f; }
 
-        // ‘O•ûŒü‚Ö‚ÌˆÚ“®
+        // ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½Ö‚ÌˆÚ“ï¿½
         if (z > 0.10f)
         {
             if (speedZ + acceleration < maximumSpeed * z) { speedZ += acceleration; }
             else { speedZ = maximumSpeed * z; }
         }
-        // Œã•ûŒü‚Ö‚ÌˆÚ“®
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö‚ÌˆÚ“ï¿½
         else if (z < -0.10f)
         {
             if (speedZ - acceleration > maximumSpeed * z) { speedZ -= acceleration; }
             else { speedZ = maximumSpeed * z; }
         }
-        // ‰½‚à“ü—Í‚³‚ê‚Ä‚¢‚È‚¢ê‡‚ÍŒ¸‘¬
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í‚ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½ê‡ï¿½ÍŒï¿½ï¿½ï¿½
         else { speedZ *= 0.90f; }
 
-        // ˆÚ“®‚·‚é
+        // ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½
         transform.Translate(speedX * Time.deltaTime, 0.0f, speedZ * Time.deltaTime);
 
-        // ˆÚ“®‰Â”\”ÍˆÍ‚ğ’´‚¦‚È‚¢‚æ‚¤‚É‚·‚é
+        // ï¿½Ú“ï¿½ï¿½Â”\ï¿½ÍˆÍ‚ğ’´‚ï¿½ï¿½È‚ï¿½ï¿½æ‚¤ï¿½É‚ï¿½ï¿½ï¿½
         Vector3 currentPosition = transform.position;
         currentPosition.x = Mathf.Clamp(currentPosition.x, movableArea.xNegativeLimit, movableArea.xPositiveLimit);
         currentPosition.z = Mathf.Clamp(currentPosition.z, movableArea.zNegativeLimit, movableArea.zPositiveLimit);

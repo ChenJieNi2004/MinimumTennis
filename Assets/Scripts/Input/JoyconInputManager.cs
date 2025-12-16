@@ -27,10 +27,10 @@ public class JoyconInputManager : MonoBehaviour, IInputDevice
     private Joycon m_joyconR;
     private Joycon dominantJoycon;
 
-    // ƒXƒCƒ“ƒO”»’è‚Ég—p‚·‚éƒpƒ‰ƒ[ƒ^
+    // ï¿½Xï¿½Cï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½Égï¿½pï¿½ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½^
     private SwingSide swing;
 
-    // ƒXƒCƒ“ƒO”»’è—p‚Ì•Ï”
+    // ï¿½Xï¿½Cï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½pï¿½Ì•Ïï¿½
     private readonly int defaultTestTime = 10;
     private float testTime;
     private bool tested;
@@ -61,7 +61,7 @@ public class JoyconInputManager : MonoBehaviour, IInputDevice
         m_joyconL = m_joycons.Find(c => c.isLeft);
         m_joyconR = m_joycons.Find(c => !c.isLeft);
 
-        // •·‚«è‚É‰‚¶‚ÄƒXƒCƒ“ƒO”»’è‚É—p‚¢‚éJoy-Con‚ğ‘ã“ü
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É‰ï¿½ï¿½ï¿½ï¿½ÄƒXï¿½Cï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½É—pï¿½ï¿½ï¿½ï¿½Joy-Conï¿½ï¿½ï¿½ï¿½
         if (Parameters.charactersDominantHand[0] == DominantHand.left) { dominantJoycon = m_joyconL; }
         else { dominantJoycon = m_joyconR; }
 
@@ -75,7 +75,7 @@ public class JoyconInputManager : MonoBehaviour, IInputDevice
 
     void FixedUpdate()
     {
-        // ¶‰E‚ÌJoy-Con‚ªŒq‚ª‚Á‚Ä‚¢‚È‚¢ê‡
+        // ï¿½ï¿½ï¿½Eï¿½ï¿½Joy-Conï¿½ï¿½ï¿½qï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½ê‡
         if (m_joycons == null || m_joyconL == null || m_joyconR == null) { return; }
 
         if (m_joyconL != null)
@@ -104,7 +104,7 @@ public class JoyconInputManager : MonoBehaviour, IInputDevice
     // for Joy-Cons Debug
     private void OnGUI()
     {
-        // EnterƒL[‚ğ‰Ÿ‚µ‚Ä‚¢‚éŠÔ‚ÍJoy-Con‚ÌƒfƒoƒbƒOî•ñ‚ğ•\¦‚·‚é
+        // Enterï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Ô‚ï¿½Joy-Conï¿½Ìƒfï¿½oï¿½bï¿½Oï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (!Input.GetKey(KeyCode.Return)) { return; }
 
         var style = GUI.skin.GetStyle("label");
@@ -133,10 +133,10 @@ public class JoyconInputManager : MonoBehaviour, IInputDevice
 
             GUILayout.BeginVertical(GUILayout.Width(480));
             GUILayout.Label(name);
-            GUILayout.Label(string.Format("StickF({0}, {1})", stick[0], stick[1]));
-            GUILayout.Label("GyroF" + gyro);
-            GUILayout.Label("AccelerationF" + accel);
-            GUILayout.Label("OrientationF" + orientation);
+            GUILayout.Label(string.Format("Stickï¿½F({0}, {1})", stick[0], stick[1]));
+            GUILayout.Label("Gyroï¿½F" + gyro);
+            GUILayout.Label("Accelerationï¿½F" + accel);
+            GUILayout.Label("Orientationï¿½F" + orientation);
 
             GUILayout.EndVertical();
         }
@@ -230,7 +230,10 @@ public class JoyconInputManager : MonoBehaviour, IInputDevice
     {
         return isPressedWest && swingResult != Swing.none;
     }
-
+    public bool GetCVShotInput(Players player)
+    {
+        return false;
+    }
     public bool GetTossInput(Players player)
     {
         return isPressedEast;

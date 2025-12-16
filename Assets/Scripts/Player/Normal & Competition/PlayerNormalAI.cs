@@ -8,30 +8,30 @@ public class PlayerNormalAI : MonoBehaviour
     private float delay = 0.30f;
     private float distance = 1.0f;
 
-    // ‘Îí‘Šè‚ÌƒvƒŒƒCƒ„
+    // ï¿½Îí‘Šï¿½ï¿½Ìƒvï¿½ï¿½ï¿½Cï¿½ï¿½
     private GameObject opponentPlayer;
 
-    // ƒ{[ƒ‹
+    // ï¿½{ï¿½[ï¿½ï¿½
     private GameObject ballObject;
     private NormalBallController ball;
 
-    // ˆÚ“®‚É—p‚¢‚éƒpƒ‰ƒ[ƒ^
+    // ï¿½Ú“ï¿½ï¿½ï¿½ï¿½É—pï¿½ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½^
     private bool isArrivedX = true;
     private bool isArrivedZ = true;
     private Vector3 targetPosition;
 
-    // •Ô‹…‚É—p‚¢‚éƒpƒ‰ƒ[ƒ^
+    // ï¿½Ô‹ï¿½ï¿½ï¿½ï¿½É—pï¿½ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½^
     private bool hitBall;
     private string lastShooter;
 
-    // ƒT[ƒu‚É—p‚¢‚éƒpƒ‰ƒ[ƒ^
+    // ï¿½Tï¿½[ï¿½uï¿½ï¿½ï¿½É—pï¿½ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½^
     private float autoServeCount;
 
-    // ©g‚ª1P‚©2P‚©‚ğŠi”[
+    // ï¿½ï¿½ï¿½gï¿½ï¿½1Pï¿½ï¿½2Pï¿½ï¿½ï¿½ï¿½ï¿½iï¿½[
     [NonSerialized]
     public Players player;
 
-    // ©“®‘€ì—pƒpƒ‰ƒ[ƒ^
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½pï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½^
     [NonSerialized]
     public bool autoMove;
     [NonSerialized]
@@ -53,7 +53,7 @@ public class PlayerNormalAI : MonoBehaviour
     [NonSerialized]
     public bool serve;
 
-    // ƒeƒCƒNƒoƒbƒN‚É—p‚¢‚éƒpƒ‰ƒ[ƒ^
+    // ï¿½eï¿½Cï¿½Nï¿½oï¿½bï¿½Nï¿½ï¿½ï¿½É—pï¿½ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½^
     [NonSerialized]
     public float autoMoveLateralDirection;
     [NonSerialized]
@@ -79,15 +79,15 @@ public class PlayerNormalAI : MonoBehaviour
         delay = Parameters.reactionDelay[(int)player];
         distance = Parameters.distance[(int)player];
 
-        // ˆÚ“®‚Ì‚İ‚ª©“®‰»‚³‚ê‚Ä‚¢‚é‚Æ‚«
+        // ï¿½Ú“ï¿½ï¿½Ì‚İ‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Æ‚ï¿½
         if (autoMove && !autoShot)
         {
-            // §Œä‰Â”\‚Å‚È‚¢‚Æ‚«AƒeƒCƒNƒoƒbƒNó‘Ô‚ğ‰ğœ‚·‚é
+            // ï¿½ï¿½ï¿½ï¿½Â”\ï¿½Å‚È‚ï¿½ï¿½Æ‚ï¿½ï¿½Aï¿½eï¿½Cï¿½Nï¿½oï¿½bï¿½Nï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (!GameData.controllable) { ResetTakeback(); }
         }
         else
         {
-            // ˆÚ“®‚ª©“®‰»‚³‚ê‚Ä‚¢‚È‚¢ê‡‚ÍAƒeƒCƒNƒoƒbƒNó‘Ô‚ğ‰ğœ‚·‚é
+            // ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½ê‡ï¿½ÍAï¿½eï¿½Cï¿½Nï¿½oï¿½bï¿½Nï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             ResetTakeback();
         }
     }
@@ -102,7 +102,7 @@ public class PlayerNormalAI : MonoBehaviour
     {
         if (autoMove || autoShot)
         {
-            // ƒ{[ƒ‹‚ğ’T‚µA•Ï”‚ÉŠi”[‚·‚é
+            // ï¿½{ï¿½[ï¿½ï¿½ï¿½ï¿½Tï¿½ï¿½ï¿½Aï¿½Ïï¿½ï¿½ÉŠiï¿½[ï¿½ï¿½ï¿½ï¿½
             if (CountObjectAmount("Ball") == 1 && !ballObject)
             {
                 ballObject = GameObject.FindWithTag("Ball");
@@ -117,14 +117,14 @@ public class PlayerNormalAI : MonoBehaviour
 
         if (autoMove)
         {
-            // ©“®‚ÅˆÚ“®‚·‚é
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ÅˆÚ“ï¿½ï¿½ï¿½ï¿½ï¿½
             if (GameData.controllable) { AutoMove(targetPosition); }
             else { targetPosition = transform.position; }
         }
 
         if (autoShot)
         {
-            // ©“®‚ÅƒgƒXEƒT[ƒu‚ğ‚·‚é
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Åƒgï¿½Xï¿½Eï¿½Tï¿½[ï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (GameData.controllable) { AutoTossAndServe(); }
         }
     }
@@ -135,7 +135,7 @@ public class PlayerNormalAI : MonoBehaviour
 
         if (autoShot)
         {
-            // ©“®‚ÅƒVƒ‡ƒbƒg‚ğ‘Å‚Â
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ÅƒVï¿½ï¿½ï¿½bï¿½gï¿½ï¿½Å‚ï¿½
             AutoShot();
         }
     }
@@ -148,9 +148,9 @@ public class PlayerNormalAI : MonoBehaviour
         if (!isArrivedX && !(ballArrivalPoint.x - arrivalRange <= transform.position.x
             && transform.position.x <= ballArrivalPoint.x + arrivalRange))
         {
-            // ‰E•ûŒü‚Ö‚ÌˆÚ“®
+            // ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½Ö‚ÌˆÚ“ï¿½
             if (arrivalPointInPlayerLocal.x > 0) { x = 1.0f; }
-            // ¶•ûŒü‚Ö‚ÌˆÚ“®
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö‚ÌˆÚ“ï¿½
             else { x = -1.0f; }
         }
         else
@@ -162,9 +162,9 @@ public class PlayerNormalAI : MonoBehaviour
         if (!isArrivedZ && !(ballArrivalPoint.z - arrivalRange <= transform.position.z
             && transform.position.z <= ballArrivalPoint.z + arrivalRange))
         {
-            // ‘O•ûŒü‚Ö‚ÌˆÚ“®
+            // ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½Ö‚ÌˆÚ“ï¿½
             if (arrivalPointInPlayerLocal.z > 0) { z = 1.0f; }
-            // Œã•ûŒü‚Ö‚ÌˆÚ“®
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö‚ÌˆÚ“ï¿½
             else { z = -1.0f; }
         }
         else
@@ -183,7 +183,7 @@ public class PlayerNormalAI : MonoBehaviour
 
             if (autoServeCount > 2.0f)
             {
-                // ƒgƒX‚ğã‚°‚é
+                // ãƒˆã‚¹ã‚’ä¸Šã’ã‚‹
                 GameData.isToss = true;
                 toss = true;
 
@@ -193,15 +193,15 @@ public class PlayerNormalAI : MonoBehaviour
         else { toss = false; }
 
         if (GameData.server == name 
-            && !GameData.isServeIn@&& GameData.isToss && GameData.lastShooter == null
+            && !GameData.isServeIn && GameData.isToss && GameData.lastShooter == null
             && ball != null)
         {
-            // ƒT[ƒu‚ğ‘Å‚Â
+            // ã‚µãƒ¼ãƒ–ã‚’æ‰“ã¤
             if (ball.transform.position.y >= 14.0f)
             {
                 serve = true;
 
-                // ‘Å‚Â•ûŒü‚ğƒ‰ƒ“ƒ_ƒ€‚É•Ï‚¦‚é
+                // æ‰“ã¤æ–¹å‘ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«å¤‰ãˆã‚‹
                 int random = UnityEngine.Random.Range(-1, 2);
                 x = random;
             }
@@ -226,7 +226,7 @@ public class PlayerNormalAI : MonoBehaviour
 
         Vector3 nextTargetPosition;
 
-        // ‘ŠèƒvƒŒƒCƒ„‚ªƒ{[ƒ‹‚ğ‘Å‚¿•Ô‚µ‚½uŠÔ
+        // ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½{ï¿½[ï¿½ï¿½ï¿½ï¿½Å‚ï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ï¿½uï¿½ï¿½
         if (lastShooter != opponentPlayer.name && GameData.lastShooter == opponentPlayer.name)
         {
             Vector3 ballArrivalPoint = CalculateBallArrivalPoint();
@@ -239,16 +239,16 @@ public class PlayerNormalAI : MonoBehaviour
             }
             else { hitBall = false; }
 
-            // ˆÚ“®‚Ì‚İ‚ª©“®‰»‚³‚ê‚Ä‚¢‚éê‡AƒeƒCƒNƒoƒbƒN‚·‚é
+            // ï¿½Ú“ï¿½ï¿½Ì‚İ‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ê‡ï¿½Aï¿½eï¿½Cï¿½Nï¿½oï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½
             if (autoMove && !autoShot && hitBall) { DecideTakeback(ballArrivalPoint, delay); }
         }
-        // ©•ª‚ªƒ{[ƒ‹‚ğ‘Å‚¿•Ô‚µ‚½uŠÔ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½{ï¿½[ï¿½ï¿½ï¿½ï¿½Å‚ï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ï¿½uï¿½ï¿½
         else if (lastShooter != name && GameData.lastShooter == name)
         {
             nextTargetPosition = OptimizePosition();
             UpdateTargetPosition(nextTargetPosition, delay * 1.50f);
 
-            // ˆÚ“®‚Ì‚İ‚ª©“®‰»‚³‚ê‚Ä‚¢‚éê‡AƒeƒCƒNƒoƒbƒNó‘Ô‚ğ‰ğœ‚·‚é
+            // ï¿½Ú“ï¿½ï¿½Ì‚İ‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ê‡ï¿½Aï¿½eï¿½Cï¿½Nï¿½oï¿½bï¿½Nï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (autoMove && !autoShot) { ResetTakeback(); }
         }
     }
@@ -294,14 +294,14 @@ public class PlayerNormalAI : MonoBehaviour
         Vector3 playerPosition = opponentPlayer.transform.position;
         Vector3 defaltTargetPoint;
 
-        // ‘ŠèƒvƒŒƒCƒ„[‚ª‘O‰qƒ|ƒWƒVƒ‡ƒ“‚Ì‚Æ‚«
+        // ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Oï¿½qï¿½|ï¿½Wï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ì‚Æ‚ï¿½
         if (GameData.courtArea.zNegativeLimit / 2.0f < opponentPlayer.transform.position.z 
             && opponentPlayer.transform.position.z < GameData.courtArea.zPositiveLimit / 2.0f)
         {
             if (playerPosition.x < 0.0f) { defaltTargetPoint = new Vector3(12.0f, 0.0f, 35.0f * transform.forward.z); }
             else { defaltTargetPoint = new Vector3(-12.0f, 0.0f, 35.0f * transform.forward.z); }
         }
-        // ‘ŠèƒvƒŒƒCƒ„[‚ªŒã‰qƒ|ƒWƒVƒ‡ƒ“‚Ì‚Æ‚«
+        // ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½qï¿½|ï¿½Wï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ì‚Æ‚ï¿½
         else
         {
             if (playerPosition.x < 0.0f) { defaltTargetPoint = new Vector3(12.0f, 0.0f, 40.0f * transform.forward.z); }
@@ -321,18 +321,18 @@ public class PlayerNormalAI : MonoBehaviour
         if (!isArrivedX && !isArrivedZ) { return UnityEngine.Random.Range(30.0f, 40.0f); }
         else if (isArrivedX && isArrivedZ)
         {
-            // ƒvƒŒƒCƒ„[‚ª‘O‰qƒ|ƒWƒVƒ‡ƒ“‚Ì‚Æ‚«
+            // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Oï¿½qï¿½|ï¿½Wï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ì‚Æ‚ï¿½
             if (GameData.courtArea.zNegativeLimit / 2.0f < opponentPlayer.transform.position.z 
             && opponentPlayer.transform.position.z < GameData.courtArea.zPositiveLimit / 2.0f) { return UnityEngine.Random.Range(45.0f, 50.0f); }
-            // ƒvƒŒƒCƒ„[‚ªŒã‰qƒ|ƒWƒVƒ‡ƒ“‚Ì‚Æ‚«
+            // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½qï¿½|ï¿½Wï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ì‚Æ‚ï¿½
             else { return UnityEngine.Random.Range(20.0f, 30.0f); }
         }
         else
         {
-            // ƒvƒŒƒCƒ„[‚ª‘O‰qƒ|ƒWƒVƒ‡ƒ“‚Ì‚Æ‚«
+            // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Oï¿½qï¿½|ï¿½Wï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ì‚Æ‚ï¿½
             if (GameData.courtArea.zNegativeLimit / 2.0f < opponentPlayer.transform.position.z
             && opponentPlayer.transform.position.z < GameData.courtArea.zPositiveLimit / 2.0f) { return UnityEngine.Random.Range(35.0f, 45.0f); }
-            // ƒvƒŒƒCƒ„[‚ªŒã‰qƒ|ƒWƒVƒ‡ƒ“‚Ì‚Æ‚«
+            // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½qï¿½|ï¿½Wï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ì‚Æ‚ï¿½
             else {  return UnityEngine.Random.Range(25.0f, 30.0f); }
         }
     }
@@ -415,14 +415,14 @@ public class PlayerNormalAI : MonoBehaviour
         {
             Vector3 objectPositionInPlayerLocal = transform.InverseTransformPoint(ballArrivalPoint);
 
-            // ‰E‘¤‚Å‘Å‚¿•Ô‚·
+            // ï¿½Eï¿½ï¿½ï¿½Å‘Å‚ï¿½ï¿½Ô‚ï¿½
             if (objectPositionInPlayerLocal.x > 0.0f)
             {
                 autoMoveLateralDirection = -1;
                 takebackFore = Parameters.charactersDominantHand[0] == DominantHand.right;
                 takebackBack = Parameters.charactersDominantHand[0] != DominantHand.right;
             }
-            // ¶‘¤‚Å‘Å‚¿•Ô‚·
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Å‘Å‚ï¿½ï¿½Ô‚ï¿½
             else
             {
                 autoMoveLateralDirection = 1;

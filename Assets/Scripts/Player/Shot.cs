@@ -17,7 +17,7 @@ public class Shot : MonoBehaviour
     [System.NonSerialized]
     public Area opponentCourtArea;
 
-    // ©“®ˆÚ“®‚ÉA‘Å‚Â•ûŒü‚ğŒˆ‚ß‚é•Ï”
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ÉAï¿½Å‚Â•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½Ïï¿½
     private float autoMoveLateralDirection;
 
     private AudioSource audioSource;
@@ -26,10 +26,19 @@ public class Shot : MonoBehaviour
 
     private Animator animator;
 
+    [Header("CV Shot")]
+    public float cvMultiplierX = 1.0f;
+    public float cvMultiplierY = 1.0f;
+    public float cvMultiplierZ = 1.0f;
+    public float cvMinUpwardSpeed = 8.0f;  
+    public AudioClip cvHitSound;
+
+    public float slowFactor = 1.0f;
+
     // Start is called before the first frame update
     void Start()
     {
-        ballSpeed = Parameters.ballSpeed[(int)player];
+        ballSpeed = Parameters.ballSpeed[(int)player] * slowFactor;
 
         audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
@@ -38,7 +47,7 @@ public class Shot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ballSpeed = Parameters.ballSpeed[(int)player];
+        ballSpeed = Parameters.ballSpeed[(int)player] * slowFactor;
     }
 
     public void Toss()
@@ -52,7 +61,7 @@ public class Shot : MonoBehaviour
         float posX = transform.position.x;
         float posZ = transform.position.z;
 
-        // ƒvƒŒƒCƒ„‚ÌˆÊ’u‚É‘Î‚µ‚ÄAu³–Êv‚Ìu‚‚³6.0fv‚Ìu‘O‚É5.0fv‚ÌˆÊ’u‚Éƒ{[ƒ‹‚ğ¶¬‚·‚é
+        // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ÌˆÊ’uï¿½É‘Î‚ï¿½ï¿½ÄAï¿½uï¿½ï¿½ï¿½Êvï¿½Ìuï¿½ï¿½ï¿½ï¿½6.0fï¿½vï¿½Ìuï¿½Oï¿½ï¿½5.0fï¿½vï¿½ÌˆÊ’uï¿½Éƒ{ï¿½[ï¿½ï¿½ï¿½ğ¶ï¿½ï¿½ï¿½ï¿½ï¿½
         ballObject.transform.position = new Vector3(posX, 6.0f, posZ + 5.0f * transform.forward.z);
 
         IBallController ball = ballObject.GetComponent<IBallController>();
@@ -78,7 +87,7 @@ public class Shot : MonoBehaviour
         ball.SpeedY = powerY;
         ball.SpeedZ = powerZ * transform.forward.z;
 
-        ball.BallSpeed = ballSpeed;
+        ball.BallSpeed = ballSpeed * slowFactor;
     }
 
     public void NormalShot(GameObject ballObject, DominantHand dominantHand)
@@ -89,13 +98,13 @@ public class Shot : MonoBehaviour
         float powerY = 25.0f;
         float powerZ = 65.0f;
 
-        // ƒ{[ƒ‹‚Ì¶‰E‚ÌƒXƒs[ƒh‚ğŒˆ‚ß‚é‚½‚ß‚Ì•Ï”
+        // ï¿½{ï¿½[ï¿½ï¿½ï¿½Ìï¿½ï¿½Eï¿½ÌƒXï¿½sï¿½[ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½ß‚é‚½ï¿½ß‚Ì•Ïï¿½
         float lateralDirection;
 
-        // ©“®ˆÚ“®‚É‘Å‚Â•ûŒü‚ğŒˆ‚ß‚é•Ï”‚ª0.0fi’l‚ª“ü‚Á‚Ä‚¢‚È‚¢jê‡
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ú“ï¿½ï¿½ï¿½ï¿½É‘Å‚Â•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½Ïï¿½ï¿½ï¿½0.0fï¿½iï¿½lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½jï¿½ê‡
         if (autoMoveLateralDirection == 0.0f)
         {
-            // ƒvƒŒƒCƒ„‚Æƒ{[ƒ‹‚Ì‘Š‘Î“I‚ÈˆÊ’uŠÖŒW‚É‰‚¶‚ÄAƒ{[ƒ‹‚Ì‰¡•ûŒü‚ÌŒü‚«‚ğŒˆ‚ß‚é
+            // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Æƒ{ï¿½[ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½Î“Iï¿½ÈˆÊ’uï¿½ÖŒWï¿½É‰ï¿½ï¿½ï¿½ï¿½ÄAï¿½{ï¿½[ï¿½ï¿½ï¿½Ì‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌŒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½
             Vector3 objectPositionInPlayerLocal = transform.InverseTransformPoint(ballObject.transform.position);
             lateralDirection = objectPositionInPlayerLocal.x > 0 ? -1.0f : 1.0f;
         }
@@ -116,7 +125,7 @@ public class Shot : MonoBehaviour
 
         AdjustBallSpeed(ballObject);
 
-        ball.BallSpeed = ballSpeed;
+        ball.BallSpeed = ballSpeed * slowFactor;
     }
 
     public void LobShot(GameObject ballObject, DominantHand dominantHand)
@@ -127,13 +136,13 @@ public class Shot : MonoBehaviour
         float powerY = 45.0f;
         float powerZ = 45.0f;
 
-        // ƒ{[ƒ‹‚Ì¶‰E‚ÌƒXƒs[ƒh‚ğŒˆ‚ß‚é‚½‚ß‚Ì•Ï”
+        // ï¿½{ï¿½[ï¿½ï¿½ï¿½Ìï¿½ï¿½Eï¿½ÌƒXï¿½sï¿½[ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½ß‚é‚½ï¿½ß‚Ì•Ïï¿½
         float lateralDirection;
 
-        // ©“®ˆÚ“®‚É‘Å‚Â•ûŒü‚ğŒˆ‚ß‚é•Ï”‚ª0.0fi’l‚ª“ü‚Á‚Ä‚¢‚È‚¢jê‡
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ú“ï¿½ï¿½ï¿½ï¿½É‘Å‚Â•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½Ïï¿½ï¿½ï¿½0.0fï¿½iï¿½lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½jï¿½ê‡
         if (autoMoveLateralDirection == 0.0f)
         {
-            // ƒvƒŒƒCƒ„‚Æƒ{[ƒ‹‚Ì‘Š‘Î“I‚ÈˆÊ’uŠÖŒW‚É‰‚¶‚ÄAƒ{[ƒ‹‚Ì‰¡•ûŒü‚ÌŒü‚«‚ğŒˆ‚ß‚é
+            // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Æƒ{ï¿½[ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½Î“Iï¿½ÈˆÊ’uï¿½ÖŒWï¿½É‰ï¿½ï¿½ï¿½ï¿½ÄAï¿½{ï¿½[ï¿½ï¿½ï¿½Ì‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌŒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½
             Vector3 objectPositionInPlayerLocal = transform.InverseTransformPoint(ballObject.transform.position);
             lateralDirection = objectPositionInPlayerLocal.x > 0 ? -1.0f : 1.0f;
         }
@@ -154,7 +163,7 @@ public class Shot : MonoBehaviour
 
         AdjustBallSpeed(ballObject);
 
-        ball.BallSpeed = ballSpeed;
+        ball.BallSpeed = ballSpeed * slowFactor;
     }
 
     public void FastShot(GameObject ballObject, DominantHand dominantHand)
@@ -165,13 +174,13 @@ public class Shot : MonoBehaviour
         float powerY = 14.0f;
         float powerZ = 100.0f;
 
-        // ƒ{[ƒ‹‚Ì¶‰E‚ÌƒXƒs[ƒh‚ğŒˆ‚ß‚é‚½‚ß‚Ì•Ï”
+        // ï¿½{ï¿½[ï¿½ï¿½ï¿½Ìï¿½ï¿½Eï¿½ÌƒXï¿½sï¿½[ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½ß‚é‚½ï¿½ß‚Ì•Ïï¿½
         float lateralDirection;
 
-        // ©“®ˆÚ“®‚É‘Å‚Â•ûŒü‚ğŒˆ‚ß‚é•Ï”‚ª0.0fi’l‚ª“ü‚Á‚Ä‚¢‚È‚¢jê‡
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ú“ï¿½ï¿½ï¿½ï¿½É‘Å‚Â•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½Ïï¿½ï¿½ï¿½0.0fï¿½iï¿½lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½jï¿½ê‡
         if (autoMoveLateralDirection == 0.0f)
         {
-            // ƒvƒŒƒCƒ„‚Æƒ{[ƒ‹‚Ì‘Š‘Î“I‚ÈˆÊ’uŠÖŒW‚É‰‚¶‚ÄAƒ{[ƒ‹‚Ì‰¡•ûŒü‚ÌŒü‚«‚ğŒˆ‚ß‚é
+            // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Æƒ{ï¿½[ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½Î“Iï¿½ÈˆÊ’uï¿½ÖŒWï¿½É‰ï¿½ï¿½ï¿½ï¿½ÄAï¿½{ï¿½[ï¿½ï¿½ï¿½Ì‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌŒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½
             Vector3 objectPositionInPlayerLocal = transform.InverseTransformPoint(ballObject.transform.position);
             lateralDirection = objectPositionInPlayerLocal.x > 0 ? -1.0f : 1.0f;
         }
@@ -204,13 +213,13 @@ public class Shot : MonoBehaviour
         float powerY = 25.0f;
         float powerZ = 48.0f;
 
-        // ƒ{[ƒ‹‚Ì¶‰E‚ÌƒXƒs[ƒh‚ğŒˆ‚ß‚é‚½‚ß‚Ì•Ï”
+        // ï¿½{ï¿½[ï¿½ï¿½ï¿½Ìï¿½ï¿½Eï¿½ÌƒXï¿½sï¿½[ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½ß‚é‚½ï¿½ß‚Ì•Ïï¿½
         float lateralDirection;
 
-        // ©“®ˆÚ“®‚É‘Å‚Â•ûŒü‚ğŒˆ‚ß‚é•Ï”‚ª0.0fi’l‚ª“ü‚Á‚Ä‚¢‚È‚¢jê‡
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ú“ï¿½ï¿½ï¿½ï¿½É‘Å‚Â•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½Ïï¿½ï¿½ï¿½0.0fï¿½iï¿½lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½jï¿½ê‡
         if (autoMoveLateralDirection == 0.0f)
         {
-            // ƒvƒŒƒCƒ„‚Æƒ{[ƒ‹‚Ì‘Š‘Î“I‚ÈˆÊ’uŠÖŒW‚É‰‚¶‚ÄAƒ{[ƒ‹‚Ì‰¡•ûŒü‚ÌŒü‚«‚ğŒˆ‚ß‚é
+            // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Æƒ{ï¿½[ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½Î“Iï¿½ÈˆÊ’uï¿½ÖŒWï¿½É‰ï¿½ï¿½ï¿½ï¿½ÄAï¿½{ï¿½[ï¿½ï¿½ï¿½Ì‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌŒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½
             Vector3 objectPositionInPlayerLocal = transform.InverseTransformPoint(ballObject.transform.position);
             lateralDirection = objectPositionInPlayerLocal.x > 0 ? -1.0f : 1.0f;
         }
@@ -247,13 +256,13 @@ public class Shot : MonoBehaviour
         int num = Random.Range(0, 3);
         audioSource.PlayOneShot(hitSounds[num]);
 
-        // ƒ{[ƒ‹‚Ì¶‰E‚ÌƒXƒs[ƒh‚ğŒˆ‚ß‚é‚½‚ß‚Ì•Ï”
+        // ï¿½{ï¿½[ï¿½ï¿½ï¿½Ìï¿½ï¿½Eï¿½ÌƒXï¿½sï¿½[ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½ß‚é‚½ï¿½ß‚Ì•Ïï¿½
         float lateralDirection;
 
-        // ©“®ˆÚ“®‚É‘Å‚Â•ûŒü‚ğŒˆ‚ß‚é•Ï”‚ª0.0fi’l‚ª“ü‚Á‚Ä‚¢‚È‚¢jê‡
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ú“ï¿½ï¿½ï¿½ï¿½É‘Å‚Â•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½Ïï¿½ï¿½ï¿½0.0fï¿½iï¿½lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½jï¿½ê‡
         if (autoMoveLateralDirection == 0.0f)
         {
-            // ƒvƒŒƒCƒ„‚Æƒ{[ƒ‹‚Ì‘Š‘Î“I‚ÈˆÊ’uŠÖŒW‚É‰‚¶‚ÄAƒ{[ƒ‹‚Ì‰¡•ûŒü‚ÌŒü‚«‚ğŒˆ‚ß‚é
+            // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Æƒ{ï¿½[ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½Î“Iï¿½ÈˆÊ’uï¿½ÖŒWï¿½É‰ï¿½ï¿½ï¿½ï¿½ÄAï¿½{ï¿½[ï¿½ï¿½ï¿½Ì‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌŒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½
             Vector3 objectPositionInPlayerLocal = transform.InverseTransformPoint(ballObject.transform.position);
             lateralDirection = objectPositionInPlayerLocal.x > 0 ? -1.0f : 1.0f;
         }
@@ -280,13 +289,13 @@ public class Shot : MonoBehaviour
         float powerY = 5.0f;
         float powerZ = 55.0f;
 
-        // ƒ{[ƒ‹‚Ì¶‰E‚ÌƒXƒs[ƒh‚ğŒˆ‚ß‚é‚½‚ß‚Ì•Ï”
+        // ï¿½{ï¿½[ï¿½ï¿½ï¿½Ìï¿½ï¿½Eï¿½ÌƒXï¿½sï¿½[ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½ß‚é‚½ï¿½ß‚Ì•Ïï¿½
         float lateralDirection;
 
-        // ©“®ˆÚ“®‚É‘Å‚Â•ûŒü‚ğŒˆ‚ß‚é•Ï”‚ª0.0fi’l‚ª“ü‚Á‚Ä‚¢‚È‚¢jê‡
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ú“ï¿½ï¿½ï¿½ï¿½É‘Å‚Â•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½Ïï¿½ï¿½ï¿½0.0fï¿½iï¿½lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½jï¿½ê‡
         if (autoMoveLateralDirection == 0.0f)
         {
-            // ƒvƒŒƒCƒ„‚Æƒ{[ƒ‹‚Ì‘Š‘Î“I‚ÈˆÊ’uŠÖŒW‚É‰‚¶‚ÄAƒ{[ƒ‹‚Ì‰¡•ûŒü‚ÌŒü‚«‚ğŒˆ‚ß‚é
+            // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Æƒ{ï¿½[ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½Î“Iï¿½ÈˆÊ’uï¿½ÖŒWï¿½É‰ï¿½ï¿½ï¿½ï¿½ÄAï¿½{ï¿½[ï¿½ï¿½ï¿½Ì‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌŒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½
             Vector3 objectPositionInPlayerLocal = transform.InverseTransformPoint(ballObject.transform.position);
             lateralDirection = objectPositionInPlayerLocal.x > 0 ? -1.0f : 1.0f;
         }
@@ -311,32 +320,70 @@ public class Shot : MonoBehaviour
         ball.BallSpeed = ballSpeed;
     }
 
-    public void AIShot(GameObject ballObject, Vector3 power, DominantHand dominantHand)
-    {
-        IBallController ball = ballObject.GetComponent<IBallController>();
+    // public void AIShot(GameObject ballObject, Vector3 power, DominantHand dominantHand)
+    // {
+    //     IBallController ball = ballObject.GetComponent<IBallController>();
 
-        float powerX = power.x;
-        float powerY = power.y;
-        float powerZ = power.z;
+    //     float powerX = power.x;
+    //     float powerY = power.y;
+    //     float powerZ = power.z;
 
-        Vector3 objectPositionInPlayerLocal = transform.InverseTransformPoint(ballObject.transform.position);
-        float lateralDirection = objectPositionInPlayerLocal.x > 0 ? -1.0f : 1.0f;
+    //     Vector3 objectPositionInPlayerLocal = transform.InverseTransformPoint(ballObject.transform.position);
+    //     float lateralDirection = objectPositionInPlayerLocal.x > 0 ? -1.0f : 1.0f;
 
-        if (lateralDirection == (int)dominantHand) { animator.SetTrigger("Forehand"); }
-        else if (lateralDirection == -(int)dominantHand) { animator.SetTrigger("Backhand"); }
+    //     if (lateralDirection == (int)dominantHand) { animator.SetTrigger("Forehand"); }
+    //     else if (lateralDirection == -(int)dominantHand) { animator.SetTrigger("Backhand"); }
 
-        int num = Random.Range(0, 3);
-        audioSource.PlayOneShot(hitSounds[num]);
+    //     int num = Random.Range(0, 3);
+    //     audioSource.PlayOneShot(hitSounds[num]);
 
-        ball.Time = 0.0f;
-        ball.SpeedX = powerX;
-        ball.SpeedY = powerY;
-        ball.SpeedZ = powerZ;
+    //     ball.Time = 0.0f;
+    //     ball.SpeedX = powerX;
+    //     ball.SpeedY = powerY;
+    //     ball.SpeedZ = powerZ;
 
-        ball.BallSpeed = ballSpeed;
-    }
+    //     ball.BallSpeed = ballSpeed;
+    // }
 
-    // TaskESettingƒ‚[ƒhê—pˆ—
+  public void AIShot(GameObject ballObject, Vector3 power, DominantHand dominantHand)
+  {
+      IBallController ball = ballObject.GetComponent<IBallController>();
+      Vector3 ballPos = ballObject.transform.position;
+
+      GameObject targetPlayer = (player == Players.p1)
+          ? GameData.character2
+          : GameData.character1;
+
+      Vector3 targetPos = targetPlayer.transform.position;
+
+      float aiLandingOffset = 3.0f;  
+
+      float landingZ = targetPos.z + (player == Players.p1 ? aiLandingOffset : -aiLandingOffset);
+
+      float landingX = Random.Range(opponentCourtArea.xNegativeLimit,
+                                    opponentCourtArea.xPositiveLimit);
+
+      float T = 1.25f;  
+
+      float vx = (landingX - ballPos.x) / T;
+      float vz = (landingZ - ballPos.z) / T;
+
+      float g = ball.Gravity;
+      float landingY = 0.6f;  
+
+      float vy = (landingY - ballPos.y + 0.5f * g * T * T) / T;
+
+      ball.SpeedX = vx;
+      ball.SpeedY = vy;
+      ball.SpeedZ = vz;
+      ball.BallSpeed = ballSpeed * slowFactor; 
+      GameData.lastShooter = gameObject.name;
+      GameData.foul = FoulState.NoFoul;
+      GameData.ballBoundCount = 0;
+  }
+
+
+    // Taskï¿½ESettingï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½pï¿½ï¿½ï¿½ï¿½
     public void ServeBall()
     {
         Vector3 position = transform.position;
@@ -373,7 +420,7 @@ public class Shot : MonoBehaviour
         float netArrivalTime = netDistance / Mathf.Abs(ball.SpeedZ);
         float netArrivalHight = ball.SpeedY * netArrivalTime - 0.50f * gravity * netArrivalTime * netArrivalTime + ballPosition.y;
 
-        // (GameData“à‚Å’è‹`‚³‚ê‚Ä‚¢‚énetHight‚ğg—p‚µ‚Ä‚¢‚é‚ªATaskData“à‚Å’è‹`‚³‚ê‚Ä‚¢‚é‚à‚Ì‚ğg‚Á‚Ä‚à‚æ‚¢)
+        // (GameDataï¿½ï¿½ï¿½Å’ï¿½`ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½netHightï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½Ä‚ï¿½ï¿½é‚ªï¿½ATaskDataï¿½ï¿½ï¿½Å’ï¿½`ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½gï¿½ï¿½ï¿½Ä‚ï¿½ï¿½æ‚¢)
         if (GameData.netHight / 2.0f < netArrivalHight && netArrivalHight < GameData.netHight)
         {
             float targetHight = 7.0f;
@@ -404,28 +451,36 @@ public class Shot : MonoBehaviour
 
         if (area.xPositiveLimit < arrivalPointX && arrivalPointX < area.xPositiveLimit + 10.0f)
         {
-            // X²‚Ì³•ûŒü‚Ö‚ÌƒAƒEƒg‚ğ•â³‚·‚é
+            // Xï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö‚ÌƒAï¿½Eï¿½gï¿½ï¿½â³ï¿½ï¿½ï¿½ï¿½
             ball.SpeedX = ((area.xPositiveLimit - margin) - ballPosition.x) / arrivalTime;
         }
         else if (area.xNegativeLimit - 10.0f < arrivalPointX && arrivalPointX < area.xNegativeLimit)
         {
-            // X²‚Ì•‰•ûŒü‚Ö‚ÌƒAƒEƒg‚ğ•â³‚·‚é
+            // Xï¿½ï¿½ï¿½Ì•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö‚ÌƒAï¿½Eï¿½gï¿½ï¿½â³ï¿½ï¿½ï¿½ï¿½
             ball.SpeedX = ((area.xNegativeLimit + margin) - ballPosition.x) / arrivalTime;
         }
 
         if (area.zPositiveLimit < arrivalPointZ && arrivalPointZ < area.zPositiveLimit + 10.0f)
         {
-            // Z²‚Ì³•ûŒü‚Ö‚ÌƒAƒEƒg‚ğ•â³‚·‚é
+            // Zï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö‚ÌƒAï¿½Eï¿½gï¿½ï¿½â³ï¿½ï¿½ï¿½ï¿½
             ball.SpeedZ = ((area.zPositiveLimit - margin) - ballPosition.z) / arrivalTime;
         }
         else if (area.zNegativeLimit - 10.0f < arrivalPointZ && arrivalPointZ < area.zNegativeLimit)
         {
-            // Z²‚Ì•‰•ûŒü‚Ö‚ÌƒAƒEƒg‚ğ•â³‚·‚é
+            // Zï¿½ï¿½ï¿½Ì•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö‚ÌƒAï¿½Eï¿½gï¿½ï¿½â³ï¿½ï¿½ï¿½ï¿½
             ball.SpeedZ = ((area.zNegativeLimit + margin) - ballPosition.z) / arrivalTime;
         }
     }
+    private void ApplySlowMotion(IBallController ball, float slowFactor)
+    {
+        ball.SpeedX *= slowFactor;
+        ball.SpeedY *= slowFactor;
+        ball.SpeedZ *= slowFactor;
 
-    // TaskESettingƒ‚[ƒhê—pˆ—
+        ball.BallSpeed /= slowFactor;
+    }
+
+    // Taskï¿½ESettingï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½pï¿½ï¿½ï¿½ï¿½
     private Vector3 DecideBallSpeed(GameObject ballObject)
     {
         TaskBallController ball = ballObject.GetComponent<TaskBallController>();
